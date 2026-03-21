@@ -1,1 +1,7 @@
-/target
+/target/
+
+/plugins/*
+
+!/plugins/plugin_template/
+!/plugins/plugin_template/*
+

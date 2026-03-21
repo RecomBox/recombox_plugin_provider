@@ -1,0 +1,17 @@
+{
+  "name": "plugin_the_pirate_bay",
+  "type": "module",
+  "scripts": {
+    "build": "node esbuild.config.ts"
+  },
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "esbuild": "^0.27.4"
+  }
+}
