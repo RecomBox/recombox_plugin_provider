@@ -1,5 +1,5 @@
 {
-  "name": "plugin_the_pirate_bay",
+  "name": "plugin_template",
   "type": "module",
   "scripts": {
     "build": "node esbuild.config.ts"

@@ -8,22 +8,16 @@ use boa_engine::{
 
 use std::path::Path;
 
-fn hello_world(
-    this: &JsValue,
-    args: &[JsValue],
-    ctx: &mut Context,
-) -> JsResult<JsValue> {
-    Ok(JsValue::new(JsString::from("Hello from Rust!")))
-}
+mod request;
 
 
-pub fn get_context() {
+pub async fn get_context() {
     
     let mut context = Context::default();
 
     let func = FunctionObjectBuilder::new(
         context.realm(),
-        NativeFunction::from_fn_ptr(hello_world),
+        NativeFunction::from_async_fn(request::new),
     )
     .build();
 

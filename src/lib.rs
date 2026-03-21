@@ -9,8 +9,8 @@ pub mod get_torrent;
 mod tests {
     use super::*;
 
-    #[test]
-    fn run_sth() {
-        linker::get_context();
+    #[tokio::test]
+    async fn run_sth() {
+        linker::get_context().await;
     }
 }
