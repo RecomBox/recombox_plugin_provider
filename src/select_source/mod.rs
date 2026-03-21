@@ -14,4 +14,4 @@ pub struct OuputPayloadInfo{
 }
 
 #[derive(Debug, Deserialize, Serialize)]
-pub struct OuputPayload(Vec<OuputPayloadInfo>);
+pub struct OuputPayload(pub Vec<OuputPayloadInfo>);
