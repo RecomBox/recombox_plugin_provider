@@ -12,3 +12,6 @@ pub struct OuputPayloadInfo{
     pub id: String,
     pub title: String
 }
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct OuputPayload(Vec<OuputPayloadInfo>);
