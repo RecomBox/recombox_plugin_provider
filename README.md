@@ -26,8 +26,8 @@ bun install
 
 **[Required]** export functions inside `plugin.ts`:
 ```typescript
-import * as get_sources_types from "@plugin_provider/global_types/get_sources";
-import * as get_torrents_types from "@plugin_provider/global_types/get_torrents";
+import type * as get_sources_types from "@plugin_provider/global_types/get_sources";
+import type * as get_torrents_types from "@plugin_provider/global_types/get_torrents";
 
 export function get_sources(input_payload: get_sources_types.InputPayload): get_sources_types.OutputPayload {...}
 export function get_torrents(input_payload: get_torrents_types.InputPayload): get_torrents_types.OutputPayload {...}

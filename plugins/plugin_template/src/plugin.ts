@@ -1,7 +1,7 @@
-import * as get_sources_types from "@plugin_provider/global_types/get_sources";
-import * as get_torrents_types from "@plugin_provider/global_types/get_torrents";
+import type * as get_sources_types from "@plugin_provider/global_types/get_sources";
+import type * as get_torrents_types from "@plugin_provider/global_types/get_torrents";
 
-import * as request_types from "@plugin_provider/global_types/request";
+import type * as request_types from "@plugin_provider/global_types/request";
 
 export async function get_sources(input_payload: get_sources_types.InputPayload): Promise<get_sources_types.OutputPayload> {
     let data: get_sources_types.OutputPayload = [{
