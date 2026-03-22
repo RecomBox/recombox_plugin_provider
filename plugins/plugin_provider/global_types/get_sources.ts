@@ -3,6 +3,9 @@ export type InputPayload = {
     id: string;
     title: string;
     source: string;
+    season: string;
+    episode: string;
+    search?: string;
 }
 
 export type OutputPayloadInfo = {

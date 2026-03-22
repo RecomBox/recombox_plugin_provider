@@ -11,28 +11,25 @@ use std::path::Path;
 mod request;
 
 
-pub async fn get_context() {
+pub async fn get_context() -> anyhow::Result<Context>{
     
     let mut context = Context::default();
 
-    let func = FunctionObjectBuilder::new(
-        context.realm(),
-        NativeFunction::from_async_fn(request::new),
-    )
-    .build();
 
     // Register the Rust function globally
     context.register_global_property(
-        JsString::from("hello"),
-        func,
+        JsString::from("request"),
+
+        FunctionObjectBuilder::new(
+            context.realm(),
+            NativeFunction::from_async_fn(request::new),
+        ).build(),
+
         Attribute::all(),
-    ).unwrap();
+    ).map_err(|e| anyhow::Error::msg(e.to_string()))?;
 
-    let script_path = Path::new(r"D:\Codes\recombox_plugin_provider\plugins\plugin_the_pirate_bay\dist\plugin.js");
+    return Ok(context);
 
-    context.eval(Source::from_filepath(script_path).unwrap()).unwrap();
 
-    // Call it from JS
-    let result = context.eval(Source::from_bytes("plugin.get_torrent(hello());")).unwrap();
-    println!("{:?}", result.to_string(&mut context).unwrap());
+    
 }
