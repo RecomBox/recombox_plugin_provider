@@ -18,12 +18,13 @@ mod tests {
         let input_payload = get_torrents::InputPayload {
             id: "72673844".to_string(),
             source: "anime".to_string(),
+            page: 1
         };
 
         let script_path = Path::new(r"D:\Codes\recombox_plugin_provider\plugins\plugin_the_pirate_bay\dist\plugin.js");
         // <-
 
-        
+
         let result = get_torrents::new(script_path, input_payload).await;
 
         println!("{:?}", result);
@@ -43,7 +44,8 @@ mod tests {
             source: "tv".to_string(),
             season: Some(1),
             episode: Some(1),
-            search: None
+            search: None,
+            page: 1
         };
 
         let script_path = Path::new(r"D:\Codes\recombox_plugin_provider\plugins\plugin_the_pirate_bay\dist\plugin.js");

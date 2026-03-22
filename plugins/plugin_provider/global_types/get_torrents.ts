@@ -2,6 +2,7 @@
 export type InputPayload = {
     id: string;
     source: string;
+    page: number;
 }
 
 export type OutputPayloadInfo = {

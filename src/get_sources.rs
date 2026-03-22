@@ -20,6 +20,7 @@ pub struct InputPayload{
     pub season: Option<u64>,
     pub episode: Option<u64>,
     pub search: Option<String>,
+    pub page: u64
 }
 
 #[derive(Debug, Deserialize, Serialize)]

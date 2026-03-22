@@ -6,6 +6,7 @@ export type InputPayload = {
     season: string;
     episode: string;
     search?: string;
+    page: number;
 }
 
 export type OutputPayloadInfo = {

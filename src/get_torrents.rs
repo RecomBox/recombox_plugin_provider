@@ -15,7 +15,8 @@ use crate::linker;
 #[derive(Debug, Deserialize, Serialize)]
 pub struct InputPayload{
     pub id: String,
-    pub source: String
+    pub source: String,
+    pub page: u64
 }
 
 
