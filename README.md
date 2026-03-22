@@ -40,7 +40,15 @@ export function get_torrents(input_payload: get_torrents_types.InputPayload): ge
     - File IO (Some methods available in global declared functions)
     - And any other packages that can't be load in `boa_engine`
 
+Build Plugin:
+```bash
+bun run build
+```
+- Output to `dist/plugin.js`
+
+
 Test Plugin;
+- **[Required]** rebuild the plugin using build command from above everytime you make changes to the plugin.
 - Write and modify test value inside rust `/src/test.rs`
 ```bash
 cargo test -- --nocapture
@@ -51,11 +59,7 @@ cargo test
 ```
 
 
-Build Plugin:
-```bash
-bun run build
-```
-- Output to `dist/plugin.js`
+
 
 
 
