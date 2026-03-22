@@ -41,7 +41,12 @@ export function get_torrents(input_payload: get_torrents_types.InputPayload): ge
     - And any other packages that can't be load in `boa_engine`
 
 Test Plugin;
+- Write and modify test value inside rust `/src/test.rs`
 ```bash
+cargo test -- --nocapture
+
+# Or
+cargo test
 
 ```
 

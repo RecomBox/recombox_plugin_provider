@@ -1,5 +1,10 @@
 #[cfg(test)]
 mod tests {
+    // ==================================================================
+    // Note: Uncomment #[tokio::test(flavor = "multi_thread")] to enable specific test.
+    // ==================================================================
+
+
     use super::*;
     
     use std::path::Path;
@@ -9,13 +14,16 @@ mod tests {
     async fn get_torrent() {
         use crate::get_torrents;
 
+        // -> Stuff that you need to changes
         let input_payload = get_torrents::InputPayload {
             id: "72673844".to_string(),
             source: "anime".to_string(),
         };
 
         let script_path = Path::new(r"D:\Codes\recombox_plugin_provider\plugins\plugin_the_pirate_bay\dist\plugin.js");
+        // <-
 
+        
         let result = get_torrents::new(script_path, input_payload).await;
 
         println!("{:?}", result);
