@@ -50,13 +50,10 @@ bun run build
 
 Test Plugin;
 - **[Required]** rebuild the plugin using build command from above everytime you make changes to the plugin.
-- Write and modify test value inside rust `/src/test.rs`
+- Write and modify test value inside rust `test.ts` of the plugin directory
 ```bash
-cargo test -- --nocapture
-
-# Or
-cargo test
-
+# Or use any runtime you want
+bun run test
 ```
 
 
