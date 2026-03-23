@@ -2,7 +2,7 @@
   "name": "plugin_template",
   "type": "module",
   "scripts": {
-    "build": "node esbuild.config.ts"
+    "build": "node esbuild.config.js"
   },
   "private": true,
   "devDependencies": {
