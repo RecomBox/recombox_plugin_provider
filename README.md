@@ -17,6 +17,7 @@ Go to `plugin_template` directory
 cd plugins/plugin_template
 ```
 - You can copy the template and rename the directory to your pluign name.
+- Make sure to add your plugin to another repository and add it to `/plugins_manifest.json`
 
 Install dependencies:
 ```bash

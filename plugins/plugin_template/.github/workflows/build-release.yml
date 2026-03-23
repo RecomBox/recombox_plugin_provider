@@ -1,0 +1,82 @@
+name: Build & Release Plugin
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  PLUGIN_NAME: The Pirate Bay
+
+jobs:
+  build:
+    permissions:
+      contents: write
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Install Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Install Bun
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      # Install jq (needed to parse package.json)
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Build plugin
+        run: bun run build
+
+      - name: Read package.json version
+        id: pkg
+        run: |
+          echo "version=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
+
+      - name: Create latest.json
+        run: |
+          echo '{' > latest.json
+          echo '  "version": "'"${{ steps.pkg.outputs.version }}"'",' >> latest.json
+          echo '  "name": "'"${PLUGIN_NAME}"'",' >> latest.json
+          echo '  "url": "https://github.com/${{ github.repository }}/releases/download/v${{ steps.pkg.outputs.version }}/plugin.js"' >> latest.json
+          echo '}' >> latest.json
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.pkg.outputs.version }}
+          name: Release v${{ steps.pkg.outputs.version }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload plugin.js to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: dist/plugin.js
+          tag: v${{ steps.pkg.outputs.version }}
+          overwrite: true
+
+      - name: Upload latest.json to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: latest.json
+          tag: v${{ steps.pkg.outputs.version }}
+          overwrite: true
+          draft: true

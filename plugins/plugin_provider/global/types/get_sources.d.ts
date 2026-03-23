@@ -3,8 +3,8 @@ export type InputPayload = {
     id: string;
     title: string;
     source: string;
-    season: string;
-    episode: string;
+    season: number;
+    episode: number;
     search?: string;
     page: number;
 }

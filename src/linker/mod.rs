@@ -8,7 +8,7 @@ use boa_engine::{
 
 use std::path::Path;
 
-mod request;
+mod bridge_request;
 
 
 pub async fn get_context() -> anyhow::Result<Context>{
@@ -18,11 +18,11 @@ pub async fn get_context() -> anyhow::Result<Context>{
 
     // Register the Rust function globally
     context.register_global_property(
-        JsString::from("request"),
+        JsString::from("bridge_request"),
 
         FunctionObjectBuilder::new(
             context.realm(),
-            NativeFunction::from_async_fn(request::new),
+            NativeFunction::from_async_fn(bridge_request::new),
         ).build(),
 
         Attribute::all(),
