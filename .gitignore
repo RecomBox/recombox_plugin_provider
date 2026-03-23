@@ -8,3 +8,5 @@
 !/plugins/plugin_provider/
 !/plugins/plugin_provider/*
 
+
+*.redb

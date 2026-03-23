@@ -11,11 +11,12 @@ use serde::{Deserialize, Serialize};
 use serde_json::{to_string, from_value};
 
 use crate::linker;
+use crate::global_types;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct InputPayload{
     pub id: String,
-    pub source: String,
+    pub source: global_types::Source,
     pub page: u64
 }
 
