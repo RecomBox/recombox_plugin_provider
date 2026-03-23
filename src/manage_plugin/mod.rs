@@ -23,7 +23,7 @@ pub struct InstalledPluginInfo{
 }
 
 #[derive(Debug, Deserialize, Serialize)]
-pub struct InstalledPlugins(HashMap<String, String>);
+pub struct InstalledPlugins(HashMap<String, InstalledPluginInfo>);
 
 
 
@@ -82,16 +82,21 @@ impl PluginDatabaseManager{
             Ok(table) => table,
             Err(_) => return Ok(InstalledPlugins(HashMap::new())),
         };
+
+        let mut new_installed_plugin: InstalledPlugins = InstalledPlugins(HashMap::new());
         // Iterate over all key-value pairs
         for entry in read_table.iter()? {
             let (k, v) = entry?;
             let key = k.value();
             let value = postcard::from_bytes::<InstalledPluginInfo>(&v.value())?;
 
-            println!("{} => {:?}", key, value);
+            new_installed_plugin.0.insert(key.to_string(), value);
         }
 
-        return Err(anyhow::Error::msg(""));
+        return Ok(new_installed_plugin);
+
+
+        return Err(anyhow::Error::msg("Not implemented"));
     }
 
 }

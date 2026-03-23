@@ -47,7 +47,9 @@ mod tests {
             plugin_directory: PathBuf::from("./plugins"),
         };
 
-        let result = plugin_db_manager.get_installed_plugins(Source::Movies).await.unwrap();
+        let result = plugin_db_manager.get_installed_plugins(
+            Source::Anime
+        ).await.unwrap();
         println!("{:?}", result);
     }
 

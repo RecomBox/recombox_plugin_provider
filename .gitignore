@@ -1,12 +1,6 @@
 /target/
 
-/plugins/*
-
-!/plugins/plugin_template/
-!/plugins/plugin_template/*
-
-!/plugins/plugin_provider/
-!/plugins/plugin_provider/*
+/plugins/
 
 
 *.redb
