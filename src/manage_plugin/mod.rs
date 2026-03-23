@@ -17,8 +17,9 @@ use crate::global_types::Source;
 #[derive(Debug, Deserialize, Serialize)]
 pub struct InstalledPluginInfo{
     pub plugin_name: String,
-    pub plugin_repo: String,
-    pub plugin_path: String
+    pub plugin_repo_url: String,
+    pub plugin_path: String,
+    pub plugin_version: String
 }
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -47,27 +48,13 @@ impl PluginDatabaseManager{
     
     pub async fn add_plugin(
         &self,
-        repo_manifest_url: &str,
         plugin_source: Source,
         plugin_id: &str,
-        plugin_name: &str,
-        plugin_repo: &str
+        installed_plugin_info: InstalledPluginInfo
     ) -> anyhow::Result<()>{
         
-        let hashed_manifest_repo = blake3::hash(repo_manifest_url.as_bytes()).to_hex().to_string();
-
-
-        let plugin_path = PathBuf::from(&plugin_source.as_str())
-            .join(&hashed_manifest_repo)
-            .join(&plugin_id);
-
-        let new_plugin_info = InstalledPluginInfo{
-            plugin_name: plugin_name.to_string(),
-            plugin_repo: plugin_repo.to_string(),
-            plugin_path: plugin_path.to_string_lossy().to_string()
-        };
         
-        let serialize_plugin_info =  postcard::to_allocvec(&new_plugin_info)?;
+        let serialize_plugin_info =  postcard::to_allocvec(&installed_plugin_info)?;
 
         let table: TableDefinition<&str, Vec<u8>> = TableDefinition::new(plugin_source.as_str());
         

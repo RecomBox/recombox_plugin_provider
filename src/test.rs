@@ -8,7 +8,7 @@ mod tests {
     use std::path::{PathBuf, Path};
     
 
-    #[tokio::test(flavor = "multi_thread")]
+    // #[tokio::test(flavor = "multi_thread")]
     async fn get_plugin_list() {
         use crate::manage_plugin::get_plugin_list;
         use crate::global_types::Source;
@@ -22,14 +22,29 @@ mod tests {
         println!("{:?}", result);
     }
 
-
     // #[tokio::test(flavor = "multi_thread")]
+    async fn install_plugin() {
+        use crate::manage_plugin::install_plugin;
+        use crate::global_types::Source;
+
+        let input_payload = install_plugin::InputPayload {
+            repo_manifest_url: "https://raw.githubusercontent.com/RecomBox/recombox_plugin_provider/refs/heads/main/plugins_manifest".to_string(),
+            plugin_directory: PathBuf::from("./plugins"),
+            plugin_source: Source::Anime,
+            plugin_repo_url: "https://github.com/RecomBox/plugin_the_pirate_bay".to_string(),
+            plugin_id: "2036011253247552227".to_string(),
+        };
+
+        install_plugin::new(input_payload).await.unwrap();
+    }
+
+    #[tokio::test(flavor = "multi_thread")]
     async fn get_installed_plugins() {
         use crate::manage_plugin::PluginDatabaseManager;
         use crate::global_types::Source;
 
         let plugin_db_manager = PluginDatabaseManager{
-            plugin_directory: PathBuf::from("./"),
+            plugin_directory: PathBuf::from("./plugins"),
         };
 
         let result = plugin_db_manager.get_installed_plugins(Source::Movies).await.unwrap();
