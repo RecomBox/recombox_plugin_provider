@@ -1,6 +1,4 @@
 use serde::{Deserialize, Serialize};
-use serde_json::{to_string, from_value};
-use std::collections::HashMap;
 use std::fs::{File, create_dir_all};
 use std::path::PathBuf;
 use blake3;
@@ -13,7 +11,7 @@ use super::{InstalledPluginInfo, PluginDatabaseManager};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct InputPayload{
-    pub repo_manifest_url: String,
+    pub manifest_repo_url: String,
     pub plugin_directory: PathBuf,
     pub plugin_source: Source,
     pub plugin_id: String,
@@ -33,8 +31,6 @@ pub async fn new(input_payload: InputPayload) -> anyhow::Result<()> {
 
     let url = format!("{}/releases/latest/download/latest.json", input_payload.plugin_repo_url);
 
-    println!("{}", url);
-
 
     let data = reqwest::get(url)
         .await
@@ -45,7 +41,7 @@ pub async fn new(input_payload: InputPayload) -> anyhow::Result<()> {
 
     let plugin_file_url = data.url;
 
-    let hashed_manifest_repo = blake3::hash(input_payload.repo_manifest_url.as_bytes()).to_hex().to_string();
+    let hashed_manifest_repo = blake3::hash(input_payload.manifest_repo_url.as_bytes()).to_hex().to_string();
 
     let plugin_path = PathBuf::from(input_payload.plugin_source.as_str())
         .join(&hashed_manifest_repo)
@@ -55,7 +51,7 @@ pub async fn new(input_payload: InputPayload) -> anyhow::Result<()> {
     let new_installed_plugin = InstalledPluginInfo{
         plugin_name: data.name,
         plugin_version: data.version,
-        plugin_repo_url: input_payload.plugin_repo_url,
+        plugin_repo_url: input_payload.plugin_repo_url.to_string(),
         plugin_path: plugin_path.to_string_lossy().to_string(),
     };
 
@@ -68,8 +64,6 @@ pub async fn new(input_payload: InputPayload) -> anyhow::Result<()> {
     let plugin_full_parent_dir = input_payload.plugin_directory
         .join(input_payload.plugin_source.as_str())
         .join(&hashed_manifest_repo);
-
-    println!("{}", plugin_full_parent_dir.display());
 
     if !plugin_full_parent_dir.exists() {
         create_dir_all(&plugin_full_parent_dir)?;

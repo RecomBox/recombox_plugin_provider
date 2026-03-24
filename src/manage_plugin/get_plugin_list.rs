@@ -1,13 +1,11 @@
 use serde::{Deserialize, Serialize};
-use serde_json::{to_string, from_value};
-use sqlx::any;
 use std::collections::HashMap;
 use reqwest::Client;
 use crate::global_types::Source;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct InputPayload{
-    pub manifest_repo: String,
+    pub manifest_repo_url: String,
     pub source: Source,
 }
 
@@ -24,7 +22,7 @@ pub struct OuputPayload(pub HashMap<String, OuputPayloadInfo>);
 
 pub async fn new(input_payload: InputPayload) -> anyhow::Result<OuputPayload> {
 
-    let url = format!("{}/{}.json", input_payload.manifest_repo, input_payload.source.to_string());
+    let url = format!("{}/{}.json", input_payload.manifest_repo_url, input_payload.source.to_string());
     println!("{}", url);
 
     let client = Client::new();

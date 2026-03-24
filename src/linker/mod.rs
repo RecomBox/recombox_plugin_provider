@@ -1,12 +1,9 @@
 use boa_engine::{
-    Context, JsResult, JsValue, JsString,
+    Context, JsString,
     object::{FunctionObjectBuilder},
     native_function::NativeFunction,
     property::Attribute,
-    Source,
 };
-
-use std::path::Path;
 
 mod bridge_request;
 

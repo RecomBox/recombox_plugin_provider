@@ -1,9 +1,5 @@
 
 use boa_engine::{
-    Context, JsResult, JsValue, JsString,
-    object::{FunctionObjectBuilder},
-    native_function::NativeFunction,
-    property::Attribute,
     Source, Script
 };
 use std::path::Path;

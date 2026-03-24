@@ -1,14 +1,9 @@
 use boa_engine::{
-    Context, JsResult, JsValue, JsString,
-    object::{FunctionObjectBuilder},
-    native_function::NativeFunction,
-    property::Attribute,
-    Source,
-    builtins::promise::Promise,
+    Context, JsResult, JsValue,
     JsNativeError,
 };
 
-use std::{cell::RefCell, os::raw, str::{Bytes, FromStr}};
+use std::{cell::RefCell, str::{FromStr}};
 use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 use serde_json::{Value, from_value, to_value};
@@ -37,7 +32,7 @@ pub struct OutputPayload{
 
 
 pub async fn new(
-    this: &JsValue,
+    _this: &JsValue,
     args: &[JsValue],
     ref_ctx: &RefCell<&mut Context>,
 ) -> JsResult<JsValue> {

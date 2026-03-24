@@ -6,6 +6,20 @@ mod tests {
 
     
     use std::path::{PathBuf, Path};
+
+    #[tokio::test(flavor = "multi_thread")]
+    async fn get_installed_manifest_repo() {
+        use crate::manage_plugin::PluginDatabaseManager;
+        use crate::global_types::Source;
+
+        let plugin_db_manager = PluginDatabaseManager{
+            plugin_directory: PathBuf::from("./plugins"),
+        };
+
+        let result = plugin_db_manager.get_installed_manifest_repo().await.unwrap();
+        println!("{:?}", result);
+    }
+
     
 
     // #[tokio::test(flavor = "multi_thread")]
@@ -14,7 +28,7 @@ mod tests {
         use crate::global_types::Source;
 
         let input_payload = get_plugin_list::InputPayload {
-            manifest_repo: "https://raw.githubusercontent.com/RecomBox/recombox_plugin_provider/refs/heads/main/plugins_manifest".to_string(),
+            manifest_repo_url: "https://raw.githubusercontent.com/RecomBox/recombox_plugin_provider/refs/heads/main/plugins_manifest".to_string(),
             source: Source::Anime
         };
 
@@ -28,7 +42,7 @@ mod tests {
         use crate::global_types::Source;
 
         let input_payload = install_plugin::InputPayload {
-            repo_manifest_url: "https://raw.githubusercontent.com/RecomBox/recombox_plugin_provider/refs/heads/main/plugins_manifest".to_string(),
+            manifest_repo_url: "https://raw.githubusercontent.com/RecomBox/recombox_plugin_provider/refs/heads/main/plugins_manifest".to_string(),
             plugin_directory: PathBuf::from("./plugins"),
             plugin_source: Source::Anime,
             plugin_repo_url: "https://github.com/RecomBox/plugin_the_pirate_bay".to_string(),
@@ -38,7 +52,7 @@ mod tests {
         install_plugin::new(input_payload).await.unwrap();
     }
 
-    #[tokio::test(flavor = "multi_thread")]
+    // #[tokio::test(flavor = "multi_thread")]
     async fn get_installed_plugins() {
         use crate::manage_plugin::PluginDatabaseManager;
         use crate::global_types::Source;
@@ -65,7 +79,7 @@ mod tests {
             page: 1
         };
 
-        let script_path = Path::new(r"D:\Codes\recombox_plugin_provider\plugins\plugin_the_pirate_bay\dist\plugin.js");
+        let script_path = Path::new(r".\plugins\anime\8c8fb2b288439bcd9a71ff75051af9922162ba23b8a8ebd3db1dbe905cca00ee\2036011253247552227.js");
         // <-
 
 
