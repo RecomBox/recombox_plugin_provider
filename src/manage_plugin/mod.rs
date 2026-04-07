@@ -32,6 +32,7 @@ pub struct InstalledManifestRepo(pub Vec<InstalledManifestRepoInfo>);
 pub struct InstalledPluginInfo{
     pub plugin_name: String,
     pub plugin_repo_url: String,
+    pub plugin_icon_url: String,
     pub plugin_path: String,
     pub plugin_version: String
 }

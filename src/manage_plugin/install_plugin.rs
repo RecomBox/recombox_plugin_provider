@@ -22,7 +22,8 @@ pub struct InputPayload{
 pub struct OuputPayload{
     pub name: String,
     pub version: String,
-    pub url: String
+    pub url: String,
+    pub icon_url: String
 }
 
 
@@ -53,6 +54,7 @@ pub async fn new(input_payload: InputPayload) -> anyhow::Result<()> {
         plugin_version: data.version,
         plugin_repo_url: input_payload.plugin_repo_url.to_string(),
         plugin_path: plugin_path.to_string_lossy().to_string(),
+        plugin_icon_url: data.icon_url
     };
 
     let plugin_full_path = input_payload.plugin_directory

@@ -12,7 +12,8 @@ pub struct InputPayload{
 #[derive(Debug, Deserialize, Serialize)]
 pub struct OuputPayloadInfo{
     pub name: String,
-    pub repo_url: String
+    pub repo_url: String,
+    pub icon_url: String
 }
 
 #[derive(Debug, Deserialize, Serialize)]
