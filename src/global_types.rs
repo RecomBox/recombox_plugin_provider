@@ -25,5 +25,14 @@ impl Source {
             Source::Tv => "tv".to_string(),
         }
     }
+
+    pub fn from_str(s: &str) -> Option<Source> {
+        match s {
+            "anime" => Some(Source::Anime),
+            "movies" => Some(Source::Movies),
+            "tv" => Some(Source::Tv),
+            _ => None,
+        }
+    }
     
 }
