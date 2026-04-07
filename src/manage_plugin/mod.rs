@@ -38,7 +38,7 @@ pub struct InstalledPluginInfo{
 }
 
 #[derive(Debug, Deserialize, Serialize)]
-pub struct InstalledPlugins(HashMap<String, InstalledPluginInfo>);
+pub struct InstalledPlugins(pub HashMap<String, InstalledPluginInfo>);
 
 
 pub struct PluginDatabaseManager{
