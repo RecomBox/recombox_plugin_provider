@@ -14,13 +14,14 @@ use blake3;
 
 use crate::global_types::Source;
 
-
+const DEFAULT_MANIFEST_REPO_NAME: &str = "RecomBox";
 const DEFAULT_MANIFEST_REPO_URL: &str = "https://raw.githubusercontent.com/RecomBox/recombox_plugin_provider/refs/heads/main/plugins_manifest";
 
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct InstalledManifestRepoInfo{
     pub hashed_manifest_repo_id: String,
+    pub manifest_repo_name: String,
     pub manifest_repo_url: String
 }
 
@@ -111,6 +112,7 @@ impl PluginDatabaseManager{
         let default_hashed_manifest_repo_id = blake3::hash(DEFAULT_MANIFEST_REPO_URL.as_bytes()).to_hex().to_string();
         new_installed_manifest_repo.0.push(InstalledManifestRepoInfo{
             hashed_manifest_repo_id: default_hashed_manifest_repo_id,
+            manifest_repo_name: DEFAULT_MANIFEST_REPO_URL.to_string(),
             manifest_repo_url: DEFAULT_MANIFEST_REPO_URL.to_string()
         });
         // <-
@@ -123,14 +125,10 @@ impl PluginDatabaseManager{
         
         // Iterate over all key-value pairs
         for entry in read_table.iter()? {
-            let (k, v) = entry?;
-            let key = k.value();
+            let (_, v) = entry?;
             let value = postcard::from_bytes::<InstalledManifestRepoInfo>(&v.value())?;
-
-            new_installed_manifest_repo.0.push(InstalledManifestRepoInfo{
-                hashed_manifest_repo_id: key.to_string(),
-                manifest_repo_url: value.manifest_repo_url
-            });
+            
+            new_installed_manifest_repo.0.push(value);
         }
 
     
