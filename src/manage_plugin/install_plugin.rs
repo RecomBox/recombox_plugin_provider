@@ -1,7 +1,6 @@
 use serde::{Deserialize, Serialize};
 use std::fs::{File, create_dir_all};
 use std::path::PathBuf;
-use blake3;
 use std::io::{BufWriter, copy};
 use futures_util::stream::StreamExt;
 
@@ -11,7 +10,7 @@ use super::{InstalledPluginInfo, PluginDatabaseManager};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct InputPayload{
-    pub manifest_repo_url: String,
+    pub hashed_manifest_repo_id: String,
     pub plugin_directory: PathBuf,
     pub plugin_source: Source,
     pub plugin_id: String,
@@ -42,10 +41,9 @@ pub async fn new(input_payload: InputPayload) -> anyhow::Result<()> {
 
     let plugin_file_url = data.url;
 
-    let hashed_manifest_repo = blake3::hash(input_payload.manifest_repo_url.as_bytes()).to_hex().to_string();
 
     let plugin_path = PathBuf::from(input_payload.plugin_source.as_str())
-        .join(&hashed_manifest_repo)
+        .join(&input_payload.hashed_manifest_repo_id)
         .join(&format!("{}.js", input_payload.plugin_id));
     
 
@@ -65,7 +63,7 @@ pub async fn new(input_payload: InputPayload) -> anyhow::Result<()> {
     // -> Make sure directory Exists
     let plugin_full_parent_dir = input_payload.plugin_directory
         .join(input_payload.plugin_source.as_str())
-        .join(&hashed_manifest_repo);
+        .join(&input_payload.hashed_manifest_repo_id);
 
     if !plugin_full_parent_dir.exists() {
         create_dir_all(&plugin_full_parent_dir)?;
