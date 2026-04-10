@@ -112,7 +112,7 @@ impl PluginDatabaseManager{
         let default_hashed_manifest_repo_id = blake3::hash(DEFAULT_MANIFEST_REPO_URL.as_bytes()).to_hex().to_string();
         new_installed_manifest_repo.0.push(InstalledManifestRepoInfo{
             hashed_manifest_repo_id: default_hashed_manifest_repo_id,
-            manifest_repo_name: DEFAULT_MANIFEST_REPO_URL.to_string(),
+            manifest_repo_name: DEFAULT_MANIFEST_REPO_NAME.to_string(),
             manifest_repo_url: DEFAULT_MANIFEST_REPO_URL.to_string()
         });
         // <-
