@@ -42,7 +42,7 @@ mod tests {
         use crate::global_types::Source;
 
         let input_payload = install_plugin::InputPayload {
-            manifest_repo_url: "https://raw.githubusercontent.com/RecomBox/recombox_plugin_provider/refs/heads/main/plugins_manifest".to_string(),
+            hashed_manifest_repo_id: ".testchange.2036011253247552227".to_string(),
             plugin_directory: PathBuf::from("./plugins"),
             plugin_source: Source::Anime,
             plugin_repo_url: "https://github.com/RecomBox/plugin_the_pirate_bay".to_string(),
