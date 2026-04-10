@@ -166,6 +166,35 @@ impl PluginDatabaseManager{
         return Ok(());
     }
 
+    
+    pub async fn remove_plugin(
+        &self,
+        hashed_manifest_repo_id: &str,
+        plugin_source: Source,
+        plugin_id: &str
+    ) -> anyhow::Result<()>{
+        
+        let db = self.get_installed_plugin_db().await?;
+        let write_txn = db.begin_write()?;
+        let table: TableDefinition<&str, Vec<u8>> = TableDefinition::new(plugin_source.as_str());
+        {
+            let mut table = write_txn.open_table(table)?;
+            table.remove(plugin_id)?;
+        }
+        write_txn.commit()?;
+
+        let plugin_full_path = self.plugin_directory
+            .join(plugin_source.as_str())
+            .join(hashed_manifest_repo_id)
+            .join(format!("{}.js", plugin_id));
+
+        if plugin_full_path.exists() {
+            std::fs::remove_file(plugin_full_path)?;
+        }
+
+        return Ok(());
+    }
+
     pub async fn get_installed_plugins(
         &self,
         plugin_source: Source
