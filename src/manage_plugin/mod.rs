@@ -26,7 +26,7 @@ pub struct InstalledManifestRepoInfo{
 }
 
 #[derive(Debug, Deserialize, Serialize)]
-pub struct InstalledManifestRepo(pub Vec<InstalledManifestRepoInfo>);
+pub struct InstalledManifestRepo(pub HashMap<String, InstalledManifestRepoInfo>);
 
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -107,15 +107,18 @@ impl PluginDatabaseManager{
         let read_txn = db.begin_read()?;
         let table: TableDefinition<&str, Vec<u8>> = TableDefinition::new("installed_manifest_repo");
 
-        let mut new_installed_manifest_repo: InstalledManifestRepo = InstalledManifestRepo(Vec::new());
+        let mut new_installed_manifest_repo: InstalledManifestRepo = InstalledManifestRepo(HashMap::new());
 
         // -> Apply Default Repo First
         let default_hashed_manifest_repo_id = blake3::hash(DEFAULT_MANIFEST_REPO_URL.as_bytes()).to_hex().to_string();
-        new_installed_manifest_repo.0.push(InstalledManifestRepoInfo{
-            hashed_manifest_repo_id: default_hashed_manifest_repo_id,
-            manifest_repo_name: DEFAULT_MANIFEST_REPO_NAME.to_string(),
-            manifest_repo_url: DEFAULT_MANIFEST_REPO_URL.to_string()
-        });
+        new_installed_manifest_repo.0.insert(
+            default_hashed_manifest_repo_id.clone(),
+            InstalledManifestRepoInfo{
+                hashed_manifest_repo_id: default_hashed_manifest_repo_id.clone(),
+                manifest_repo_name: DEFAULT_MANIFEST_REPO_NAME.to_string(),
+                manifest_repo_url: DEFAULT_MANIFEST_REPO_URL.to_string()
+            }
+        );
         // <-
 
         let read_table = match read_txn.open_table(table){
@@ -126,10 +129,10 @@ impl PluginDatabaseManager{
         
         // Iterate over all key-value pairs
         for entry in read_table.iter()? {
-            let (_, v) = entry?;
+            let (k, v) = entry?;
             let value = postcard::from_bytes::<InstalledManifestRepoInfo>(&v.value())?;
             
-            new_installed_manifest_repo.0.push(value);
+            new_installed_manifest_repo.0.insert(k.value().to_string(), value);
         }
 
     
