@@ -20,7 +20,6 @@ const DEFAULT_MANIFEST_REPO_URL: &str = "https://raw.githubusercontent.com/Recom
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct InstalledManifestRepoInfo{
-    pub hashed_manifest_repo_id: String,
     pub manifest_repo_name: String,
     pub manifest_repo_url: String
 }
@@ -78,6 +77,7 @@ impl PluginDatabaseManager{
     
     pub async fn add_manifest_repo(
         &self,
+        hashed_manifest_repo_id: &str,
         installed_manifest_repo_info: InstalledManifestRepoInfo,
     ) -> anyhow::Result<()>{
         
@@ -91,7 +91,7 @@ impl PluginDatabaseManager{
         {
             let mut table = write_txn.open_table(table)?;
             table.insert(
-                installed_manifest_repo_info.hashed_manifest_repo_id.as_str(), 
+                hashed_manifest_repo_id, 
                 serialize_installed_manifest_repo_info
             )?;
         }
@@ -114,7 +114,6 @@ impl PluginDatabaseManager{
         new_installed_manifest_repo.0.insert(
             default_hashed_manifest_repo_id.clone(),
             InstalledManifestRepoInfo{
-                hashed_manifest_repo_id: default_hashed_manifest_repo_id.clone(),
                 manifest_repo_name: DEFAULT_MANIFEST_REPO_NAME.to_string(),
                 manifest_repo_url: DEFAULT_MANIFEST_REPO_URL.to_string()
             }
