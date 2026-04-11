@@ -31,6 +31,7 @@ pub struct InstalledManifestRepo(pub Vec<InstalledManifestRepoInfo>);
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct InstalledPluginInfo{
+    pub hashed_manifest_repo_id: String,
     pub plugin_name: String,
     pub plugin_repo_url: String,
     pub plugin_icon_url: String,

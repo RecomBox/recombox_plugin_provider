@@ -48,6 +48,7 @@ pub async fn new(input_payload: InputPayload) -> anyhow::Result<()> {
     
 
     let new_installed_plugin = InstalledPluginInfo{
+        hashed_manifest_repo_id: input_payload.hashed_manifest_repo_id.to_string(),
         plugin_name: data.name,
         plugin_version: data.version,
         plugin_repo_url: input_payload.plugin_repo_url.to_string(),
