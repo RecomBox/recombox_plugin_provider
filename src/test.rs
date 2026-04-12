@@ -52,7 +52,7 @@ mod tests {
         install_plugin::new(input_payload).await.unwrap();
     }
 
-    #[tokio::test(flavor = "multi_thread")]
+    // #[tokio::test(flavor = "multi_thread")]
     async fn get_installed_plugins() {
         use crate::manage_plugin::PluginDatabaseManager;
         use crate::global_types::Source;
@@ -67,7 +67,7 @@ mod tests {
         println!("{:?}", result);
     }
 
-    // #[tokio::test(flavor = "multi_thread")]
+    #[tokio::test(flavor = "multi_thread")]
     async fn get_torrent() {
         use crate::get_torrents;
         use crate::global_types::Source;
@@ -79,11 +79,11 @@ mod tests {
             page: 1
         };
 
-        let script_path = Path::new(r".\plugins\anime\8c8fb2b288439bcd9a71ff75051af9922162ba23b8a8ebd3db1dbe905cca00ee\2036011253247552227.js");
+        let script_path = PathBuf::from(r"./plugins/anime/8c8fb2b288439bcd9a71ff75051af9922162ba23b8a8ebd3db1dbe905cca00ee/2036011253247552227.js");
         // <-
 
 
-        let result = get_torrents::new(script_path, input_payload).await;
+        let result = get_torrents::new(&script_path, input_payload).await;
 
         println!("{:?}", result);
 
@@ -107,10 +107,10 @@ mod tests {
             page: 1
         };
 
-        let script_path = Path::new(r"D:\Codes\recombox_plugin_provider\plugins\plugin_the_pirate_bay\dist\plugin.js");
+        let script_path = PathBuf::from(r"./plugins/anime/8c8fb2b288439bcd9a71ff75051af9922162ba23b8a8ebd3db1dbe905cca00ee/2036011253247552227.js");
         // <-
 
-        let result = get_sources::new(script_path, input_payload).await;
+        let result = get_sources::new(&script_path, input_payload).await;
 
         println!("{:?}", result);
 

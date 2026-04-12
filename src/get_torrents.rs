@@ -2,7 +2,7 @@
 use boa_engine::{
     Source, Script
 };
-use std::path::Path;
+use std::path::PathBuf;
 use serde::{Deserialize, Serialize};
 use serde_json::{to_string, from_value};
 
@@ -26,11 +26,11 @@ pub struct OuputPayloadInfo{
 #[derive(Debug, Deserialize, Serialize)]
 pub struct OuputPayload(Vec<OuputPayloadInfo>);
 
-pub async fn new(script_path: &Path, input_payload: InputPayload) -> anyhow::Result<OuputPayload> {
+pub async fn new(plugin_path: &PathBuf, input_payload: InputPayload) -> anyhow::Result<OuputPayload> {
 
     let mut context = linker::get_context().await?;
 
-    let source_script = Source::from_filepath(script_path)?;
+    let source_script = Source::from_filepath(plugin_path)?;
         
     context.eval(source_script)
         .map_err(|e| anyhow::Error::msg(e.to_string()))?;
