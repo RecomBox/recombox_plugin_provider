@@ -25,7 +25,7 @@ pub struct OuputPayloadInfo{
 }
 
 #[derive(Debug, Deserialize, Serialize)]
-pub struct OuputPayload(Vec<OuputPayloadInfo>);
+pub struct OuputPayload(pub Vec<OuputPayloadInfo>);
 
 pub async fn new(input_payload: InputPayload) -> anyhow::Result<OuputPayload> {
 
