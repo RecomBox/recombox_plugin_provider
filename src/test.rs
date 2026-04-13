@@ -68,7 +68,7 @@ mod tests {
     }
 
     #[tokio::test(flavor = "multi_thread")]
-    async fn get_torrent() {
+    async fn get_torrents() {
         use crate::get_torrents;
         use crate::global_types::Source;
 
