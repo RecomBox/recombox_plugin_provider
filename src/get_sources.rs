@@ -13,6 +13,7 @@ use crate::global_types;
 pub struct InputPayload{
     pub id: String,
     pub title: String,
+    pub title_secondary: String,
     pub source: global_types::Source,
     pub season: Option<u64>,
     pub episode: Option<u64>,
