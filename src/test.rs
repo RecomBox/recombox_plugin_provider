@@ -74,16 +74,15 @@ mod tests {
 
         // -> Stuff that you need to changes
         let input_payload = get_torrents::InputPayload {
+            plugin_path:  PathBuf::from(r"./plugins/anime/8c8fb2b288439bcd9a71ff75051af9922162ba23b8a8ebd3db1dbe905cca00ee/2036011253247552227.js"),
             id: "72673844".to_string(),
             source: Source::Anime,
             page: 1
         };
-
-        let script_path = PathBuf::from(r"./plugins/anime/8c8fb2b288439bcd9a71ff75051af9922162ba23b8a8ebd3db1dbe905cca00ee/2036011253247552227.js");
         // <-
 
 
-        let result = get_torrents::new(&script_path, input_payload).await;
+        let result = get_torrents::new(input_payload).await;
 
         println!("{:?}", result);
 
@@ -98,19 +97,19 @@ mod tests {
 
         // -> Stuff that you need to changes
         let input_payload = get_sources::InputPayload {
+            plugin_path: PathBuf::from(r"./plugins/anime/8c8fb2b288439bcd9a71ff75051af9922162ba23b8a8ebd3db1dbe905cca00ee/2036011253247552227.js"),
             id: "tt9140554".to_string(),
             title: "Spider Man".to_string(),
+            title_secondary: "".to_string(),
             source: Source::Tv,
             season: Some(1),
             episode: Some(1),
             search: None,
             page: 1
         };
-
-        let script_path = PathBuf::from(r"./plugins/anime/8c8fb2b288439bcd9a71ff75051af9922162ba23b8a8ebd3db1dbe905cca00ee/2036011253247552227.js");
         // <-
 
-        let result = get_sources::new(&script_path, input_payload).await;
+        let result = get_sources::new(input_payload).await;
 
         println!("{:?}", result);
 

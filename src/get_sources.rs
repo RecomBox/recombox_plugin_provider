@@ -11,6 +11,7 @@ use crate::global_types;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct InputPayload{
+    pub plugin_path: PathBuf,
     pub id: String,
     pub title: String,
     pub title_secondary: String,
@@ -30,11 +31,11 @@ pub struct OuputPayloadInfo{
 #[derive(Debug, Deserialize, Serialize)]
 pub struct OuputPayload(pub Vec<OuputPayloadInfo>);
 
-pub async fn new(plugin_path: &PathBuf, input_payload: InputPayload) -> anyhow::Result<OuputPayload> {
+pub async fn new(input_payload: InputPayload) -> anyhow::Result<OuputPayload> {
 
     let mut context = linker::get_context().await?;
 
-    let source_script = Source::from_filepath(plugin_path)?;
+    let source_script = Source::from_filepath(&input_payload.plugin_path)?;
         
     context.eval(source_script)
         .map_err(|e| anyhow::Error::msg(e.to_string()))?;
