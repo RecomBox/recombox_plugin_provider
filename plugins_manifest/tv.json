@@ -3,5 +3,10 @@
         "name": "The Pirate Bay",
         "repo_url": "https://github.com/RecomBox/plugin_the_pirate_bay",
         "icon_url": "https://torrindex.net/images/tpb.jpg"
+    },
+    "2036011253247552228": {
+        "name": "EZTV",
+        "repo_url": "https://github.com/RecomBox/plugin_eztv",
+        "icon_url": "https://upload.wikimedia.org/wikipedia/en/a/ae/EZTV.png"
     }
 }
