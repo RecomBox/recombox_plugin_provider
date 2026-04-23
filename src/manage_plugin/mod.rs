@@ -1,6 +1,7 @@
 
 pub mod get_plugin_list;
 pub mod install_plugin;
+pub mod get_plugin_info;
 
 
 use std::path::{PathBuf};
@@ -17,6 +18,14 @@ use crate::global_types::Source;
 const DEFAULT_MANIFEST_REPO_NAME: &str = "RecomBox";
 const DEFAULT_MANIFEST_REPO_URL: &str = "https://raw.githubusercontent.com/RecomBox/recombox_plugin_provider/refs/heads/main/plugins_manifest";
 
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct PluginInfo{
+    pub name: String,
+    pub version: String,
+    pub url: String,
+    pub icon_url: String
+}
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct InstalledManifestRepoInfo{

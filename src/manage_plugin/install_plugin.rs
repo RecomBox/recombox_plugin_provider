@@ -5,8 +5,9 @@ use std::io::{BufWriter, copy};
 use futures_util::stream::StreamExt;
 
 use crate::global_types::Source;
+use crate::manage_plugin::get_plugin_info;
 
-use super::{InstalledPluginInfo, PluginDatabaseManager};
+use super::{InstalledPluginInfo, PluginDatabaseManager, PluginInfo};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct InputPayload{
@@ -17,27 +18,12 @@ pub struct InputPayload{
     pub plugin_repo_url: String,
 }
 
-#[derive(Debug, Deserialize, Serialize)]
-pub struct OuputPayload{
-    pub name: String,
-    pub version: String,
-    pub url: String,
-    pub icon_url: String
-}
-
 
 
 pub async fn new(input_payload: InputPayload) -> anyhow::Result<()> {
 
-    let url = format!("{}/releases/latest/download/latest.json", input_payload.plugin_repo_url);
 
-
-    let data = reqwest::get(url)
-        .await
-        .map_err(|e| anyhow::Error::msg(e.to_string()))?
-        .json::<OuputPayload>()
-        .await
-        .map_err(|e| anyhow::Error::msg(e.to_string()))?;
+    let data = get_plugin_info::new(&input_payload.plugin_repo_url).await?;
 
     let plugin_file_url = data.url;
 
