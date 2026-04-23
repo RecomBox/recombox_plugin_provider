@@ -10,8 +10,8 @@ pub enum Source{
 }
 
 impl Source {
-    pub fn to_vec_string() -> Vec<String>{
-        vec![Source::Anime.to_string(), Source::Movies.to_string(), Source::Tv.to_string()]
+    pub fn to_vec() -> Vec<Source>{
+        vec![Source::Anime, Source::Movies, Source::Tv]
     }
 
     pub fn as_str(&self) -> &'static str { 
