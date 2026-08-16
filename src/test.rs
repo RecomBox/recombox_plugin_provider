@@ -45,8 +45,8 @@ mod tests {
             hashed_manifest_repo_id: "8c8fb2b288439bcd9a71ff75051af9922162ba23b8a8ebd3db1dbe905cca00ee".to_string(),
             plugin_directory: PathBuf::from("./plugins"),
             plugin_source: Source::Anime,
-            plugin_repo_url: "https://github.com/RecomBox/plugin_the_pirate_bay".to_string(),
-            plugin_id: "2036011253247552227".to_string(),
+            plugin_repo_url: "https://github.com/RecomBox/plugin_nyaa".to_string(),
+            plugin_id: "2053767511819685888".to_string(),
         };
 
         install_plugin::new(input_payload).await.unwrap();
@@ -67,7 +67,7 @@ mod tests {
         println!("{:?}", result);
     }
 
-    #[tokio::test(flavor = "multi_thread")]
+    // #[tokio::test(flavor = "multi_thread")]
     async fn get_torrents() {
         use crate::get_torrents;
         use crate::global_types::Source;
@@ -90,18 +90,18 @@ mod tests {
     }
 
 
-    // #[tokio::test(flavor = "multi_thread")]
+    #[tokio::test(flavor = "multi_thread")]
     async fn get_source() {
         use crate::get_sources;
         use crate::global_types::Source;
 
         // -> Stuff that you need to changes
         let input_payload = get_sources::InputPayload {
-            plugin_path: PathBuf::from(r"./plugins/anime/8c8fb2b288439bcd9a71ff75051af9922162ba23b8a8ebd3db1dbe905cca00ee/2036011253247552227.js"),
+            plugin_path: PathBuf::from(r"./plugins/anime/8c8fb2b288439bcd9a71ff75051af9922162ba23b8a8ebd3db1dbe905cca00ee/2053767511819685888.js"),
             id: "tt9140554".to_string(),
             title: "Spider Man".to_string(),
-            title_secondary: "".to_string(),
-            source: Source::Tv,
+            title_secondary: "love is war".to_string(),
+            source: Source::Anime,
             season: Some(1),
             episode: Some(1),
             search: None,
